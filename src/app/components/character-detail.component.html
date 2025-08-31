@@ -1,0 +1,24 @@
+<a routerLink="/characters">← Back</a>
+
+<section *ngIf="person()" class="card">
+  <h2>{{person()!.name}}</h2>
+
+  <div><strong>Birth Year:</strong> {{person()!.birth_year}}</div>
+
+  <div>
+    <strong>Species:</strong>
+    <span *ngFor="let s of species()" class="chip">{{s.name}}</span>
+    <span *ngIf="!species().length">Human (default)</span>
+  </div>
+
+  <div>
+    <strong>Movies:</strong>
+    <span *ngFor="let f of films()" class="chip">Ep {{f.episode_id}} - {{f.title}}</span>
+  </div>
+
+  <div>
+    <strong>Starships:</strong>
+    <span *ngFor="let s of starships()" class="chip">{{s.name}}</span>
+    <span *ngIf="!starships().length">None</span>
+  </div>
+</section>

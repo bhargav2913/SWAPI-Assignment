@@ -1,0 +1,115 @@
+<section class="layout">
+  <aside class="filters">
+    <h2>Filters</h2>
+
+    <div class="field">
+      <label>Movie</label>
+      <select
+        [ngModel]="selectedFilmUrl()"
+        (ngModelChange)="selectedFilmUrl.set($event)"
+      >
+        <option value="">All</option>
+        <option *ngFor="let f of films()" [value]="f.url">
+          Episode {{ f.episode_id }} — {{ f.title }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Species</label>
+      <select
+        [ngModel]="selectedSpeciesUrl()"
+        (ngModelChange)="selectedSpeciesUrl.set($event)"
+      >
+        <option value="">All</option>
+        <option *ngFor="let s of species()" [value]="s.url">
+          {{ s.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Birth Year Range</label>
+      <div class="range-row">
+        <input
+          type="text"
+          [ngModel]="minYear()"
+          (ngModelChange)="minYear.set($event)"
+          placeholder="Min (-30 = 30BBY)"
+        />
+        <span>to</span>
+        <input
+          type="text"
+          [ngModel]="maxYear()"
+          (ngModelChange)="maxYear.set($event)"
+          placeholder="Max (5 = 5ABY)"
+        />
+      </div>
+    </div>
+
+    <button (click)="clearFilters()">Clear</button>
+  </aside>
+
+  <section class="list-card">
+    <div class="list-header">
+      <h2>Characters</h2>
+      <span>{{ filtered().length }} of {{ people().length }}</span>
+    </div>
+
+    <div class="search-row top-search">
+      <input
+        type="search"
+        placeholder="Search characters…"
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)"
+      />
+    </div>
+
+    <ul class="list">
+      <li *ngFor="let p of paginated()" (click)="open(p)" class="item">
+        <span>{{ p.name }}</span>
+        <span class="chip">{{ p.birth_year }}</span>
+      </li>
+    </ul>
+
+    <div class="pagination-controls">
+      <label>
+        Show
+        <select [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event)">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="50">50</option>
+        </select>
+        per page
+      </label>
+    </div>
+
+    <div class="pagination">
+      <button (click)="goToFirstPage()" [disabled]="currentPage() === 1">
+        First
+      </button>
+      <button (click)="prevPage()" [disabled]="currentPage() === 1">
+        Prev
+      </button>
+
+      <ng-container *ngFor="let page of pages()">
+        <button
+          (click)="goToPage(page)"
+          [class.active]="page === currentPage()"
+        >
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <button (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+        Next
+      </button>
+      <button
+        (click)="goToLastPage()"
+        [disabled]="currentPage() === totalPages()"
+      >
+        Last
+      </button>
+    </div>
+  </section>
+</section>

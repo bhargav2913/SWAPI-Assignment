@@ -1,0 +1,12 @@
+
+:root {
+  --bg: #0b0e14;
+  --card: #131826;
+  --muted: #a3b1c6;
+  --text: #e8eefc;
+  --accent: #66c0ff;
+  --chip: #1e2537;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:var(--text)}
+a{color:var(--accent)}
